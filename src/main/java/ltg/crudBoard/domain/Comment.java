@@ -2,6 +2,7 @@ package ltg.crudBoard.domain;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,6 +14,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
+@Builder
+@Table(name = "comments")
 public class Comment
 {
     @Id
@@ -29,6 +32,7 @@ public class Comment
     @Column(name = "modified_date")
     @LastModifiedDate
     private String modifiedDate;
+
 
     @ManyToOne
     @JoinColumn(name = "posts_id")

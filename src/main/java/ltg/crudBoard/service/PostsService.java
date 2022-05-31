@@ -2,7 +2,9 @@ package ltg.crudBoard.service;
 
 import lombok.RequiredArgsConstructor;
 import ltg.crudBoard.domain.Posts;
+import ltg.crudBoard.dto.PostsResponseDto;
 import ltg.crudBoard.dto.PostsSaveRequestDto;
+import ltg.crudBoard.dto.PostsUpdateRequestDto;
 import ltg.crudBoard.repository.PostsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +48,7 @@ public class PostsService
         return new PostsResponseDto(entity);
     }
 
+    /*
     @Transactional(readOnly = true)
     public List<PostsListResponseDto> findAllDesc()
     {
@@ -53,5 +56,5 @@ public class PostsService
                 .map(PostsListResponseDto::new)
                 .collect(Collectors.toList());
     }
-
+    */
 }

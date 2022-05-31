@@ -2,7 +2,9 @@ package ltg.crudBoard.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import ltg.crudBoard.dto.PostsResponseDto;
 import ltg.crudBoard.dto.PostsSaveRequestDto;
+import ltg.crudBoard.dto.PostsUpdateRequestDto;
 import ltg.crudBoard.service.PostsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ltg.crudBoard.domain.Posts;
 
+//등록
 @Getter
 @NoArgsConstructor
 public class PostsSaveRequestDto
