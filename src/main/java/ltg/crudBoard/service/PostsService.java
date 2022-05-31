@@ -2,6 +2,7 @@ package ltg.crudBoard.service;
 
 import lombok.RequiredArgsConstructor;
 import ltg.crudBoard.domain.Posts;
+import ltg.crudBoard.dto.PostsListResponseDto;
 import ltg.crudBoard.dto.PostsResponseDto;
 import ltg.crudBoard.dto.PostsSaveRequestDto;
 import ltg.crudBoard.dto.PostsUpdateRequestDto;
@@ -48,13 +49,13 @@ public class PostsService
         return new PostsResponseDto(entity);
     }
 
-    /*
+
     @Transactional(readOnly = true)
     public List<PostsListResponseDto> findAllDesc()
     {
         return postsRepository.findAllDesc().stream()
                 .map(PostsListResponseDto::new)
                 .collect(Collectors.toList());
-    }
-    */
+    }//postsRepository 결과로 넘어온 Posts의 Stream을 map을 통해 PostsListResponseDto로 변환 한 뒤 리스트로 반환.
+
 }
