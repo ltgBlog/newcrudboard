@@ -31,18 +31,21 @@ public class PostsApiController
         return postsService.update(id, requestDto);
     }
 
-
-    @GetMapping("/posts/{id}")
-    public PostsResponseDto findById(@PathVariable Long id)
-    {
-        return postsService.findById(id);
-    }
-
+    //delete
     @DeleteMapping("/posts/{id}")
     public Long delete(@PathVariable Long id)
     {
         postsService.delete(id);
         return id;
     }
+
+    //id에 맞는 dto 반환
+    @GetMapping("/posts/{id}")
+    public PostsResponseDto findById(@PathVariable Long id)
+    {
+        return postsService.findById(id);
+    }
+
+
 
 }

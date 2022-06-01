@@ -28,7 +28,7 @@ public class Posts extends BaseTimeEntity
     @Column(nullable = false)
     private String writer;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "integer default 0", nullable = false)
     private int hit;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -40,7 +40,8 @@ public class Posts extends BaseTimeEntity
     private List<Comment> comments;
 
     //게시글 수정
-    public void update(String title, String content) {
+    public void update(String title, String content)
+    {
         this.title = title;
         this.content = content;
     }

@@ -10,6 +10,7 @@ public class PostsListResponseDto
     private String title;
     private String writer;
     private String modifiedDate;
+    private int hit;
 
     public PostsListResponseDto(Posts entity)
     {
@@ -17,5 +18,6 @@ public class PostsListResponseDto
         this.title = entity.getTitle();
         this.writer = entity.getWriter();
         this.modifiedDate = entity.getModifiedDate();
+        this.hit = entity.getHit();
     }
 }

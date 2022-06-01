@@ -58,4 +58,10 @@ public class PostsService
                 .collect(Collectors.toList());
     }//postsRepository 결과로 넘어온 Posts의 Stream을 map을 통해 PostsListResponseDto로 변환 한 뒤 리스트로 반환.
 
+    // 조회수 증가
+    @Transactional
+    public int updateHit(Long id) {
+        return postsRepository.updateHit(id);
+    }
+
 }

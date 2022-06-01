@@ -12,11 +12,13 @@ public class PostsResponseDto
     private String title;
     private String content;
     private String writer;
+    private int hit;
 
     public PostsResponseDto(Posts entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.writer = entity.getWriter();
+        this.hit = entity.getHit();
     }
 }
