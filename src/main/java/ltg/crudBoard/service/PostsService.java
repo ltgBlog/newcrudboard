@@ -7,11 +7,14 @@ import ltg.crudBoard.dto.PostsResponseDto;
 import ltg.crudBoard.dto.PostsSaveRequestDto;
 import ltg.crudBoard.dto.PostsUpdateRequestDto;
 import ltg.crudBoard.repository.PostsRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @RequiredArgsConstructor
 @Service
@@ -25,6 +28,7 @@ public class PostsService
         return postsRepository.save(requestDto.toEntity()).getId();
     }
 
+    //단, update는 직접 구현해야 한다..
     @Transactional
     public Long update(Long id, PostsUpdateRequestDto requestDto)
     {
@@ -35,13 +39,15 @@ public class PostsService
     }
 
     @Transactional
-    public void delete (Long id) {
+    public void delete (Long id)
+    {
         Posts posts = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
 
         postsRepository.delete(posts);
     }
 
+    //dto 반환
     public PostsResponseDto findById(Long id)
     {
         Posts entity = postsRepository.findById(id)
@@ -60,8 +66,8 @@ public class PostsService
 
     // 조회수 증가
     @Transactional
-    public int updateHit(Long id) {
+    public int updateHit(Long id)
+    {
         return postsRepository.updateHit(id);
     }
-
 }

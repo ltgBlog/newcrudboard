@@ -17,6 +17,13 @@ public class PostsApiController
 
     private final PostsService postsService;
 
+    //id에 맞는 dto 반환
+    @GetMapping("/posts/{id}")
+    public PostsResponseDto findById(@PathVariable Long id)
+    {
+        return postsService.findById(id);
+    }
+
     //create
     @PostMapping("/posts")
     public Long save(@RequestBody PostsSaveRequestDto requestDto)
@@ -39,12 +46,7 @@ public class PostsApiController
         return id;
     }
 
-    //id에 맞는 dto 반환
-    @GetMapping("/posts/{id}")
-    public PostsResponseDto findById(@PathVariable Long id)
-    {
-        return postsService.findById(id);
-    }
+
 
 
 
