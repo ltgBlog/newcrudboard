@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout2/header :: header"></head>
+<head th:replace="layout/header :: header"></head>
 <body>
 <h1>게시글 수정</h1>
 
@@ -14,7 +14,7 @@
             </div>
             <div class="form-group">
                 <label for="title">제목</label>
-                <input th:value="${posts.title}" type="text" class="form-control" id="title" readonly>
+                <input th:value="${posts.title}" type="text" class="form-control" id="title">
             </div>
             <div class="form-group">
                 <label for="writer"> 작성자 </label>
@@ -23,13 +23,14 @@
             <div class="form-group">
                 <label for="content"> 내용 </label>
                 <!-- textarea에 값 지정은 text 사용 -->
-                <textarea th:text="${posts.content}" type="text" class="form-control" id="content" readonly></textarea>
+                <textarea th:text="${posts.content}" type="text" class="form-control" id="content"></textarea>
             </div>
         </form>
-        <a href="/" role="button" class="btn btn-primary">목록</a>
-        <a th:href="@{'/posts/update/' + ${posts.id}}" role="button" class="btn btn-secondary">수정</a>
+        <a href="/" role="button" class="btn btn-secondary">취소</a>
+        <button type="button" class="btn btn-primary" id="btn-update">수정 완료</button>
+        <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
     </div>
 </div>
 </body>
-<footer th:replace="layout2/footer :: footer"></footer>
+<footer th:replace="layout/footer :: footer"></footer>
 </html>

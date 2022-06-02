@@ -73,8 +73,19 @@ public class PostsService
 
     //페이징
     @Transactional
-    public Page<Posts> boardList(Pageable pageable)
+    public Page<Posts> paging(Pageable pageable)
     {
         return postsRepository.findAll(pageable);
     } //jpa에서는 페이징과 정렬은 findAll로 한다.
+
+    //검색
+    @Transactional
+    public Page<Posts> search(String searchKeyword, Pageable pageable)
+    {
+        Page<Posts> searchedList = postsRepository.findByTitleContaining(searchKeyword, pageable);
+        return searchedList;
+    }
+
+
+
 }
