@@ -1,8 +1,13 @@
 package ltg.crudBoard.controller;
 
 import lombok.RequiredArgsConstructor;
+import ltg.crudBoard.domain.Posts;
 import ltg.crudBoard.dto.PostsResponseDto;
 import ltg.crudBoard.service.PostsService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +24,19 @@ public class IndexController
 
     //처음화면
     @GetMapping("/")
-    public String index(Model model)
+    public String index(Model model,
+                        @PageableDefault(page=0, size=2, sort = "id", direction = Sort.Direction.DESC)
+                        Pageable pageable)
     {
-        model.addAttribute("posts", postsService.findAllDesc()); //게시글 리스트
+        Page<Posts> list = null;
+        list=postsService.boardList(pageable);
+
+        int startPage = Math.max(1, list.getPageable().getPageNumber() - 4);
+        int endPage = Math.min(list.getPageable().getPageNumber()+4, list.getTotalPages());
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("posts", list); //게시글 리스트
 
         return "index";
     }
@@ -30,7 +45,7 @@ public class IndexController
     @GetMapping("/posts/write")
     public String postsSave()
     {
-        return "posts/posts_write";
+        return "posts2/posts_write";
     }
 
     //글 수정 페이지로!
@@ -40,7 +55,7 @@ public class IndexController
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("posts", dto);
 
-        return "posts/posts_update";
+        return "posts2/posts_update";
     }
 
     //글 상세보기 페이지로!
@@ -52,6 +67,6 @@ public class IndexController
         model.addAttribute("posts", dto);
 
 
-        return "posts/posts_read";
+        return "posts2/posts_read";
     }
 }

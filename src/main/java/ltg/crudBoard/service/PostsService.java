@@ -70,4 +70,11 @@ public class PostsService
     {
         return postsRepository.updateHit(id);
     }
+
+    //페이징
+    @Transactional
+    public Page<Posts> boardList(Pageable pageable)
+    {
+        return postsRepository.findAll(pageable);
+    } //jpa에서는 페이징과 정렬은 findAll로 한다.
 }
