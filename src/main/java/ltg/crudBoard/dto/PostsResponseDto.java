@@ -14,6 +14,7 @@ public class PostsResponseDto
     private String writer;
     private int hit;
 
+    //entity -> dto. db를 조회
     public PostsResponseDto(Posts entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();

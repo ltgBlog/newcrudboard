@@ -22,6 +22,7 @@ public class PostsSaveRequestDto
         this.writer = writer;
     }
 
+    //dto -> entity. db에 등록
     public Posts toEntity()
     {
         return Posts.builder()
