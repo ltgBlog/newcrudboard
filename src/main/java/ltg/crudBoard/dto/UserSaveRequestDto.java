@@ -14,7 +14,7 @@ import ltg.crudBoard.domain.User;
 @Builder //3개 같이 쓰면 에러 방지?
 public class UserSaveRequestDto
 {
-    private String userid;
+    private String username;
     private String password;
     private String nickname;
     private String email;
@@ -24,11 +24,11 @@ public class UserSaveRequestDto
     public User toEntity()
     {
         User user = User.builder()
-                .userid(userid)
+                .username(username)
                 .password(password)
                 .nickname(nickname)
                 .email(email)
-                .role(role)
+                .role(role.USER)
                 .build();
         return user;
     }

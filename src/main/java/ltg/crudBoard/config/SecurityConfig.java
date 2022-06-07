@@ -1,9 +1,11 @@
 package ltg.crudBoard.config;
 
 import lombok.RequiredArgsConstructor;
-import ltg.crudBoard.domain.Role;
+import ltg.crudBoard.auth.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,7 +14,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class SecurityConfig extends WebSecurityConfigurerAdapter
+{
     private final CustomUserDetailsService customUserDetailsService;
 
     @Bean
@@ -21,7 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception
+    {
         auth.userDetailsService(customUserDetailsService).passwordEncoder(encoder());
     }
 
@@ -31,21 +37,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(HttpSecurity httpSecurity) throws Exception {
+    public void configure(HttpSecurity httpSecurity) throws Exception
+    {
         httpSecurity.csrf().disable()
-                .headers().frameOptions().disable()
+                //ignoringAntMatchers("/api/**")
+                .authorizeRequests()//url별 권한 접근 제어 관리 옵션 시작
+                //.headers().frameOptions().disable()// h2콘솔 사용하기 위해  disable.
+                .antMatchers("/", "/auth/**", "/posts/read/**").permitAll() //권한 관리 대상 지정. permitall-모든 권한에게 공개
+                //.antMatchers("/api/v1/**").hasRole(Role.USER.name())
+                .anyRequest().authenticated() //나머지 요청들은 인증된 사람에게만 공개
                 .and()
-                .authorizeRequests()
-                .antMatchers("/", "/layout/**", "/posts/posts_read").permitAll()
-                .antMatchers("/api/v1/**").hasRole(Role.USER.name())
-                .anyRequest().authenticated()
+                .formLogin()
+                .loginPage("/auth/login")
+                .loginProcessingUrl("/loginProc")
+                .defaultSuccessUrl("/")
                 .and()
-                .logout()
+                .logout() //기본 경로는 /logout
                 .logoutSuccessUrl("/")
-                .and()
-                .oauth2Login()
-                .userInfoEndpoint()
-                .userService(customOAuth2UserService);
+                .invalidateHttpSession(true);
     }
 
 }

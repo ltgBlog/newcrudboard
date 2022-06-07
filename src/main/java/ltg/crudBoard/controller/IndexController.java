@@ -3,6 +3,7 @@ package ltg.crudBoard.controller;
 import lombok.RequiredArgsConstructor;
 import ltg.crudBoard.domain.Posts;
 import ltg.crudBoard.dto.PostsResponseDto;
+import ltg.crudBoard.dto.UserSessionDto;
 import ltg.crudBoard.service.PostsService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
+
 
 //화면단(머스태치) 까지 불러줌 로직 처리는 PostsApiController가..
 @RequiredArgsConstructor
@@ -22,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class IndexController
 {
     private final PostsService postsService;
-
+    private final HttpSession httpSession;
     //처음화면
     @GetMapping("/")
     public String index(Model model,
@@ -39,6 +42,11 @@ public class IndexController
             list=postsService.search(searchKeyword, pageable);
         }
 
+        UserSessionDto user = (UserSessionDto) httpSession.getAttribute("user");
+        if (user != null) { //로그인 되었다면 model에 저장
+            model.addAttribute("user", user.getNickname());
+        }
+
         //현재 페이지 기준, 앞 뒤로 4칸씩 보여주기 위함
         //페이지는 0부터 시작하고, 최대,최소를 넘어가지 않기 위해 max,min 메소드를 사용했다.
         int startPage = Math.max(1, list.getPageable().getPageNumber() - 4);
@@ -53,8 +61,12 @@ public class IndexController
 
     //글 쓰기 페이지로!
     @GetMapping("/posts/write")
-    public String postsSave()
+    public String postsSave(Model model)
     {
+        UserSessionDto user = (UserSessionDto) httpSession.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user.getNickname());
+        }
         return "posts/posts_write";
     }
 
@@ -62,6 +74,11 @@ public class IndexController
     @GetMapping("/posts/update/{id}")
     public String postsUpdate(@PathVariable Long id, Model model)
     {
+        UserSessionDto user = (UserSessionDto) httpSession.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user.getNickname());
+        }
+
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("posts", dto);
 
@@ -72,6 +89,11 @@ public class IndexController
     @GetMapping("/posts/read/{id}")
     public String postsRead(@PathVariable Long id, Model model)
     {
+        UserSessionDto user = (UserSessionDto) httpSession.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user.getNickname());
+        }
+
         PostsResponseDto dto = postsService.findById(id);
         postsService.updateHit(id);
         model.addAttribute("posts", dto);

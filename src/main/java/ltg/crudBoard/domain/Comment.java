@@ -33,7 +33,6 @@ public class Comment
     @LastModifiedDate
     private String modifiedDate;
 
-
     @ManyToOne
     @JoinColumn(name = "posts_id")
     private Posts posts;
