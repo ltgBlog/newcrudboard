@@ -1,6 +1,7 @@
 package ltg.crudBoard.controller;
 
 import lombok.RequiredArgsConstructor;
+import ltg.crudBoard.auth.LoginUser;
 import ltg.crudBoard.domain.Posts;
 import ltg.crudBoard.dto.PostsResponseDto;
 import ltg.crudBoard.dto.UserSessionDto;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
 
 
-//화면단(머스태치) 까지 불러줌 로직 처리는 PostsApiController가..
+//화면단 까지 불러줌 로직 처리는 PostsApiController가..
 @RequiredArgsConstructor
 @Controller
 public class IndexController
@@ -28,7 +29,7 @@ public class IndexController
     private final HttpSession httpSession;
     //처음화면
     @GetMapping("/")
-    public String index(Model model,
+    public String index(Model model, @LoginUser UserSessionDto user,
                         @PageableDefault(page=0, size=10, sort = "id", direction = Sort.Direction.DESC)
                         Pageable pageable, String searchKeyword)
     {
@@ -42,7 +43,7 @@ public class IndexController
             list=postsService.search(searchKeyword, pageable);
         }
 
-        UserSessionDto user = (UserSessionDto) httpSession.getAttribute("user");
+        //UserSessionDto user = (UserSessionDto) httpSession.getAttribute("user");
         if (user != null) { //로그인 되었다면 model에 저장
             model.addAttribute("user", user.getNickname());
         }
@@ -61,9 +62,9 @@ public class IndexController
 
     //글 쓰기 페이지로!
     @GetMapping("/posts/write")
-    public String postsSave(Model model)
+    public String postsSave(Model model, @LoginUser UserSessionDto user)
     {
-        UserSessionDto user = (UserSessionDto) httpSession.getAttribute("user");
+        //UserSessionDto user = (UserSessionDto) httpSession.getAttribute("user");
         if (user != null) {
             model.addAttribute("user", user.getNickname());
         }
@@ -72,9 +73,9 @@ public class IndexController
 
     //글 수정 페이지로!
     @GetMapping("/posts/update/{id}")
-    public String postsUpdate(@PathVariable Long id, Model model)
+    public String postsUpdate(@PathVariable Long id, Model model, @LoginUser UserSessionDto user)
     {
-        UserSessionDto user = (UserSessionDto) httpSession.getAttribute("user");
+        //UserSessionDto user = (UserSessionDto) httpSession.getAttribute("user");
         if (user != null) {
             model.addAttribute("user", user.getNickname());
         }
@@ -87,9 +88,9 @@ public class IndexController
 
     //글 상세보기 페이지로!
     @GetMapping("/posts/read/{id}")
-    public String postsRead(@PathVariable Long id, Model model)
+    public String postsRead(@PathVariable Long id, Model model, @LoginUser UserSessionDto user)
     {
-        UserSessionDto user = (UserSessionDto) httpSession.getAttribute("user");
+        //UserSessionDto user = (UserSessionDto) httpSession.getAttribute("user");
         if (user != null) {
             model.addAttribute("user", user.getNickname());
         }
