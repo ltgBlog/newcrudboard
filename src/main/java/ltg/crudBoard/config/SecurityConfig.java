@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -19,22 +20,25 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
     private final CustomUserDetailsService customUserDetailsService;
-
+    private final AuthenticationFailureHandler LoginFailureHandler;
     @Bean
     public BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
 
+    //패스워드 암호화
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception
     {
         auth.userDetailsService(customUserDetailsService).passwordEncoder(encoder());
     }
 
+    //누구에게나 아래 링크는 열어둔다
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/js/**");
     }
+
 
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception
@@ -50,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .formLogin()
                 .loginPage("/auth/login")
                 .loginProcessingUrl("/loginProc")
+                .failureHandler(LoginFailureHandler)
                 .defaultSuccessUrl("/")
                 .and()
                 .logout() //기본 경로는 /logout
