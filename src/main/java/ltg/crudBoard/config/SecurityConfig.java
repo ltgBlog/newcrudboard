@@ -2,6 +2,7 @@ package ltg.crudBoard.config;
 
 import lombok.RequiredArgsConstructor;
 import ltg.crudBoard.auth.CustomUserDetailsService;
+import ltg.crudBoard.oauth.CustomOAuth2UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,17 +13,21 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true) //권한이나 인증 미리 체크
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
     private final CustomUserDetailsService customUserDetailsService;
-    private final AuthenticationFailureHandler LoginFailureHandler;
+    private final AuthenticationFailureHandler LoginFailureHandler; //로그인 실패 핸들러
+    private final CustomOAuth2UserService customOAuth2UserService; //oauth
+
     @Bean
-    public BCryptPasswordEncoder encoder() {
+    public BCryptPasswordEncoder encoder()
+    {
         return new BCryptPasswordEncoder();
     }
 
@@ -58,8 +63,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .defaultSuccessUrl("/")
                 .and()
                 .logout() //기본 경로는 /logout
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .invalidateHttpSession(true)
                 .logoutSuccessUrl("/")
-                .invalidateHttpSession(true);
+                .and()//oauth
+                .oauth2Login()
+                .userInfoEndpoint()//로그인 성공 후 사용자 정보를 가져올 때의 설정들을 담당
+                .userService(customOAuth2UserService);//로그인 성공 시 후속 조치를 진행 할 UserService 인터페이스의 구현체를 등록
+
     }
 
 }

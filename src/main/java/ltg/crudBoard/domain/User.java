@@ -12,7 +12,8 @@ import javax.persistence.*;
 @Builder
 @Getter
 @Entity
-public class User extends BaseTimeEntity {
+public class User extends BaseTimeEntity
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,7 +21,7 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100)
     private String password;
 
     @Column(nullable = false, unique = true)
@@ -34,9 +35,20 @@ public class User extends BaseTimeEntity {
     private Role role;
 
     // 회원정보 수정
-    public void update(String nickname, String password) {
+    //소셜 로그인 정보가 변경되었을 때를 대비(구글 이름이 변경되면 업데이트 한다.)
+    //db에도 반영
+    public User update(String nickname)
+    {
         this.nickname = nickname;
-        this.password = password;
+        return this;
+    }
+
+    //oauth 로그인 시 이미 등록된 회원이면 수정날짜만 업데이트
+    //기존 데이터는 그대로 유지
+    public User updateModifiedDate()
+    {
+        this.onPreUpdate();
+        return this;
     }
 
     public String getRoleKey() {
