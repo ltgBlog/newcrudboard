@@ -45,7 +45,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 attributes.getNameAttributeKey());
     }
 
-    //소셜 로그인 시 바뀐 내용 반영
+    //소셜 로그인 시 바뀐 내용 반영, 가입
     private User saveOrUpdate(OAuthAttributes attributes)
     {
         User user = userRepository.findByEmail(attributes.getEmail())

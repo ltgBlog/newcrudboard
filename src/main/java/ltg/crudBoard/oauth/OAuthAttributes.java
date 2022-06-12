@@ -9,6 +9,7 @@ import ltg.crudBoard.domain.User;
 
 import java.util.Map;
 
+//소셜 로그인 db 저장 시 필요한 dto
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -24,13 +25,11 @@ public class OAuthAttributes
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes)
     {
-
-        /*
         if("naver".equals(registrationId))
         {
             return ofNaver("id", attributes);
         }
-*/
+
         return ofGoogle(userNameAttributeName, attributes);
     }
 
@@ -44,25 +43,26 @@ public class OAuthAttributes
                 .build();
     }
 
-    /*
+
     private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
 
         return OAuthAttributes.builder()
-                .name((String) response.get("name"))
+                .username((String) response.get("email"))
                 .email((String) response.get("email"))
-                .picture((String) response.get("profile_image"))
+                .nickname((String) response.get("nickname"))
                 .attributes(response)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
     }
-*/
+
+    //dto -> entity. db에 저장.
     public User toEntity() {
         return User.builder()
                 .username(email)
                 .email(email)
                 .nickname(nickname)
-                .role(Role.SOCIAL) //원래는 GUEST임!
+                .role(Role.SOCIAL)
                 .build();
     }
 
