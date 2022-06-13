@@ -1,34 +1,34 @@
 package ltg.crudBoard.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ltg.crudBoard.domain.Posts;
+import ltg.crudBoard.domain.User;
 
 //등록
-@Getter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PostsSaveRequestDto
 {
+    private Long id;
     private String title;
     private String content;
     private String writer;
+    private int hit;
+    private User user;
 
-    @Builder
-    public PostsSaveRequestDto(String title,String content,String writer)
-    {
-        this.title=title;
-        this.content = content;
-        this.writer = writer;
-    }
 
     //dto -> entity. db에 등록
     public Posts toEntity()
     {
         return Posts.builder()
+                .id(id)
                 .title(title)
                 .content(content)
                 .writer(writer)
+                .hit(0)
+                .user(user)
                 .build();
     }
 

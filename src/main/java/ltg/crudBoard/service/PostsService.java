@@ -2,11 +2,13 @@ package ltg.crudBoard.service;
 
 import lombok.RequiredArgsConstructor;
 import ltg.crudBoard.domain.Posts;
+import ltg.crudBoard.domain.User;
 import ltg.crudBoard.dto.PostsListResponseDto;
 import ltg.crudBoard.dto.PostsResponseDto;
 import ltg.crudBoard.dto.PostsSaveRequestDto;
 import ltg.crudBoard.dto.PostsUpdateRequestDto;
 import ltg.crudBoard.repository.PostsRepository;
+import ltg.crudBoard.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,10 +23,14 @@ import java.util.stream.Collectors;
 public class PostsService
 {
     private final PostsRepository postsRepository;
+    private final UserRepository userRepository;
 
     @Transactional
-    public Long save(PostsSaveRequestDto requestDto)
+    public Long save(String nickname, PostsSaveRequestDto requestDto)
     {
+        User user = userRepository.findByNickname(nickname); //닉네임으로 유저를 찾고
+        requestDto.setUser(user); //dto에 유저 저장 (Posts의 user_id(FK)에 저장하기 위해)
+
         return postsRepository.save(requestDto.toEntity()).getId();
     }
 

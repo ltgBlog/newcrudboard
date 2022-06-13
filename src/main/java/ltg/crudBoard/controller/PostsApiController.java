@@ -2,9 +2,11 @@ package ltg.crudBoard.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import ltg.crudBoard.auth.LoginUser;
 import ltg.crudBoard.dto.PostsResponseDto;
 import ltg.crudBoard.dto.PostsSaveRequestDto;
 import ltg.crudBoard.dto.PostsUpdateRequestDto;
+import ltg.crudBoard.dto.UserSessionDto;
 import ltg.crudBoard.service.PostsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +28,10 @@ public class PostsApiController
 
     //create
     @PostMapping("/posts")
-    public Long save(@RequestBody PostsSaveRequestDto requestDto)
+    public Long save(@RequestBody PostsSaveRequestDto requestDto, @LoginUser UserSessionDto userSessionDto)
     {
-        return postsService.save(requestDto);
+        //닉네임도 넘겨준다
+        return postsService.save(userSessionDto.getNickname(),requestDto);
     }
 
     //update

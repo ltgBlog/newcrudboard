@@ -27,7 +27,10 @@
             </div>
         </form>
         <a href="/" role="button" class="btn btn-primary">목록</a>
-        <a th:href="@{'/posts/update/' + ${posts.id}}" role="button" class="btn btn-secondary">수정</a>
+        <span th:if="${sameUser}">
+                  <a th:href="@{'/posts/update/' + ${posts.id}}" role="button" class="btn btn-secondary">수정</a>
+        </span>
+
     </div>
 </div>
 </body>

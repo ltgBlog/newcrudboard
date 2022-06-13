@@ -13,6 +13,7 @@ public class PostsResponseDto
     private String content;
     private String writer;
     private int hit;
+    private Long userId;
 
     //entity -> dto. db를 조회
     public PostsResponseDto(Posts entity) {
@@ -21,5 +22,6 @@ public class PostsResponseDto
         this.content = entity.getContent();
         this.writer = entity.getWriter();
         this.hit = entity.getHit();
+        this.userId = entity.getUser().getId(); //왜래키를 통해서 Posts->User->id 필드 가져오기
     }
 }

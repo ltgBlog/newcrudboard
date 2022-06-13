@@ -90,15 +90,22 @@ public class IndexController
     @GetMapping("/posts/read/{id}")
     public String postsRead(@PathVariable Long id, Model model, @LoginUser UserSessionDto user)
     {
-        //UserSessionDto user = (UserSessionDto) httpSession.getAttribute("user");
-        if (user != null) {
-            model.addAttribute("user", user.getNickname());
-        }
-
         PostsResponseDto dto = postsService.findById(id);
+        //UserSessionDto user = (UserSessionDto) httpSession.getAttribute("user");
+        if (user != null)
+        {
+            model.addAttribute("user", user.getNickname());
+
+            //게시글 작성자가 본인인지 확인
+            if(dto.getUserId().equals(user.getId()))
+            {
+                model.addAttribute("sameUser", true);
+            }
+
+        }
+        //조회수 증가
         postsService.updateHit(id);
         model.addAttribute("posts", dto);
-
 
         return "posts/posts_read";
     }

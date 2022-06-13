@@ -31,8 +31,9 @@ public class Posts extends BaseTimeEntity
     @Column(columnDefinition = "integer default 0", nullable = false)
     private int hit;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    //User 테이블의 id필드를 외래키로 갖는다
+    @ManyToOne(fetch = FetchType.LAZY) //다대일 관계 매핑 정보. Posts와 User는 N:1관계
+    @JoinColumn(name = "user_id") //외래키 매핑
     private User user;
 
     @OneToMany(mappedBy = "posts", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
