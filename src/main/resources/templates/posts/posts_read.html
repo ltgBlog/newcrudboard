@@ -31,6 +31,47 @@
                   <a th:href="@{'/posts/update/' + ${posts.id}}" role="button" class="btn btn-secondary">수정</a>
         </span>
 
+        <!-- 댓글 -->
+        <div class="card">
+            <div class="card-header bi bi-chat-dots" th:if="${comments}" th:text="${#lists.size(comments)}+' 개의 댓글'">
+            </div>
+            <ul class="list-group-flush">
+                <li class="list-group-item" th:each="comments : ${comments}">
+                        <span>
+                            <span style="font-size: small" th:text="${comments.nickname}"></span>
+                            <span style="font-size: xx-small" th:text="${comments.createdDate}"></span>
+                            <button class="badge bi bi-pencil-square"> 수정</button>
+                            <button class="badge bi bi-trash"> 삭제</button>
+                        </span>
+                    <p></p>
+                    <div th:text="${comments.comment}"></div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 댓글 -->
+        <br/>
+
+        <div class="card">
+            <div class="card-header bi bi-chat-right-dots"> Write a Comment</div>
+            <form>
+                <input type="hidden" id="postsId" th:value="${posts.id}">
+
+                <span th:if="${user}">
+                        <div class="card-body">
+                            <textarea id="comment" class="form-control" rows="4" placeholder="댓글을 입력하세요"></textarea>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" id="btn-comment-save"
+                                    class="btn btn-outline-primary bi bi-pencil-square"> 등록</button>
+                        </div>
+                    </span>
+
+                <span th:unless="${user}">
+                        <div class="card-body" style="font-size: small"><a href="/auth/login">로그인</a>을 하시면 댓글을 등록할 수 있습니다.</div>
+                    </span>
+            </form>
+        </div>
     </div>
 </div>
 </body>

@@ -25,6 +25,10 @@ public class Comment
     @Column(columnDefinition = "TEXT", nullable = false)
     private String comment; // 댓글 내용
 
+    @ManyToOne
+    @JoinColumn(name = "posts_id")
+    private Posts posts;
+
     @Column(name = "created_date")
     @CreatedDate
     private String createdDate;
@@ -32,10 +36,6 @@ public class Comment
     @Column(name = "modified_date")
     @LastModifiedDate
     private String modifiedDate;
-
-    @ManyToOne
-    @JoinColumn(name = "posts_id")
-    private Posts posts;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

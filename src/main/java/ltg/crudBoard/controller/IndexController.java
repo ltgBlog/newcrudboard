@@ -3,6 +3,7 @@ package ltg.crudBoard.controller;
 import lombok.RequiredArgsConstructor;
 import ltg.crudBoard.auth.LoginUser;
 import ltg.crudBoard.domain.Posts;
+import ltg.crudBoard.dto.CommentResponseDto;
 import ltg.crudBoard.dto.PostsResponseDto;
 import ltg.crudBoard.dto.UserSessionDto;
 import ltg.crudBoard.service.PostsService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 //화면단 까지 불러줌 로직 처리는 PostsApiController가..
@@ -88,10 +90,18 @@ public class IndexController
 
     //글 상세보기 페이지로!
     @GetMapping("/posts/read/{id}")
-    public String postsRead(@PathVariable Long id, Model model, @LoginUser UserSessionDto user)
+    public String postsRead(@PathVariable Long id, @LoginUser UserSessionDto user, Model model)
     {
         PostsResponseDto dto = postsService.findById(id);
+        List<CommentResponseDto> comments = dto.getComments();
+
         //UserSessionDto user = (UserSessionDto) httpSession.getAttribute("user");
+
+        if(comments!=null && !comments.isEmpty())
+        {
+            model.addAttribute("comments", comments); //상세보기 페이지에서 시간,닉네임 등등 뿌려줄 것임
+        }
+
         if (user != null)
         {
             model.addAttribute("user", user.getNickname());
