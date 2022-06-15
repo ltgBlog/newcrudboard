@@ -82,7 +82,7 @@ var main = {
 
         // 공백 및 빈 문자열 체크
         if (!data.comment || data.comment.trim() === "") {
-            alert("공백 또는 입력하지 않은 부분이 있습니다.");
+            alert("댓글을 입력해주세요");
             return false;
         } else {
             $.ajax({

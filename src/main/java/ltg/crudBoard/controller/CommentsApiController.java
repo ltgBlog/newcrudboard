@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 
 @RequiredArgsConstructor
 @RequestMapping("/api")
-@RestController
+@RestController //ResponseBody + Controller. ResponseBody 사용 시 jackson 라이브러리 사용
 public class CommentsApiController
 {
     private final CommentsService commentsService;

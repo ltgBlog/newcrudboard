@@ -27,7 +27,7 @@ public class PostsResponseDto
         this.writer = entity.getWriter();
         this.hit = entity.getHit();
         this.userId = entity.getUser().getId(); //왜래키를 통해서 Posts->User->id 필드 가져오기
-        this.comments = entity.getComments().stream().map(CommentResponseDto::new).collect(Collectors.toList());
+        this.comments = entity.getComments().stream().map(comment -> new CommentResponseDto(comment)).collect(Collectors.toList());
 
     }
 }

@@ -36,8 +36,9 @@ public class Posts extends BaseTimeEntity
     @JoinColumn(name = "user_id") //외래키 매핑
     private User user;
 
+    //연관관계에 있는 Entitiy를 모두 가져올 때는 EAGER를 쓴다.,
     @OneToMany(mappedBy = "posts", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @OrderBy("id asc") // 댓글 정렬
+    //@OrderBy("id asc") // 댓글 정렬
     private List<Comment> comments;
 
     //게시글 수정

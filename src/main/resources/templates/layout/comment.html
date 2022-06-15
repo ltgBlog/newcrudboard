@@ -1,0 +1,47 @@
+<!-- 댓글 -->
+<div th:fragment="comment" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <div class="card">
+        <div class="card-header bi bi-chat-dots" th:if="${comments}" th:text="${#lists.size(comments)}+' 개의 댓글'">
+        </div>
+        <ul class="list-group-flush">
+            <li class="list-group-item" th:each="comments : ${comments}">
+                        <span>
+                            <span style="font-size: small" th:text="${comments.nickname}"></span>
+                            <span style="font-size: xx-small" th:text="${comments.createdDate}"></span>
+                            <!-- <button class="badge bi bi-pencil-square"> 수정</button>
+                            <button class="badge bi bi-trash"> 삭제</button> -->
+                        </span>
+                <p></p>
+                <div th:text="${comments.comment}"></div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 댓글 -->
+    <br/>
+
+    <div class="card">
+        <div class="card-header bi bi-chat-right-dots"> 댓글을 자신을 나타내는 얼굴입니다!! ~.~</div>
+        <form>
+            <input type="hidden" id="postsId" th:value="${posts.id}"> <!--CommentsApiController의 {id}값에 들어감-->
+
+            <span th:if="${user}">
+                        <div class="card-body">
+                            <textarea id="comment" class="form-control" rows="4" placeholder="댓글을 입력하세요"></textarea>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" id="btn-comment-save"
+                                    class="btn btn-outline-primary bi bi-pencil-square"> 등록</button>
+                        </div>
+                    </span>
+
+            <span th:unless="${user}">
+                    <div class="card-body" style="font-size: small">
+                        <a href="/auth/login">로그인이 필요한 기능입니다.</a>
+                    </div>
+                </span>
+        </form>
+    </div>
+
+</div>

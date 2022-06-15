@@ -27,6 +27,7 @@ public class CommentsService
         Posts posts = postsRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("댓글을 작성할 수 없습니다"));
 
+        //댓 다는 유저, 해당게시글의 정보를 Comment에 저장하기 위함
         dto.setUser(user);
         dto.setPosts(posts);
 
