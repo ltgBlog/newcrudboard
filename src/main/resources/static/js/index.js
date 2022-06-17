@@ -22,9 +22,10 @@ var main = {
 //해당 선택자'#btn-comment-update'로 선택되는 요소를 모두 선택함.
         document.querySelectorAll('#btn-comment-update').forEach(function (item)
         {
-            item.addEventListener('click', function () { // 클릭 시,
-                const form = this.closest('form'); // btn의 가장 가까운 조상의 Element(form)를 반환 (closest)
-                _this.commentUpdate(form); // 해당 폼으로 업데이트 수행
+            item.addEventListener('click', function () //클릭 이벤트 발생 시
+            {
+                const form = this.closest('form'); // closest 함수는 셀렉터(#btn-comment-update)로 잡히는 상위 요소중 가장 근접한 하나를 반환한다. form태그가 잡힐 것이다.
+                _this.commentUpdate(form); // 해당 form 으로 업데이트 수행. 함수로 보냄
             });
         });
 
@@ -85,7 +86,7 @@ var main = {
             alert(JSON.stringify(error));
         });
     },
-       /** 댓글 저장 */
+       //댓글 저장
     commentSave : function () {
         const data = {
             postsId: $('#postsId2').val(),
@@ -112,9 +113,11 @@ var main = {
         }
     },
 
-    /** 댓글 수정 */
-        commentUpdate : function (form) {
-            const data = {
+//댓글 수정
+        commentUpdate : function (form)
+        {
+            const data = //수정 댓글 객체 생성
+            {
                 id: form.querySelector('#id').value,
                 postsId: form.querySelector('#postsId').value,
                 comment: form.querySelector('#comment-content').value
@@ -141,7 +144,7 @@ var main = {
             }
         },
 
-        /** 댓글 삭제 */
+        //댓글 삭제
         commentDelete : function (postsId, commentId) {
                 const con_check = confirm("삭제하시겠습니까?");
                 if (con_check === true) {
@@ -157,6 +160,7 @@ var main = {
                     });
             }
         }
+
 };
 
 main.init();

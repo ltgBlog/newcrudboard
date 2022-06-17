@@ -1,6 +1,7 @@
 package ltg.crudBoard.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import ltg.crudBoard.auth.LoginUser;
 import ltg.crudBoard.domain.Posts;
 import ltg.crudBoard.dto.CommentResponseDto;
@@ -25,6 +26,7 @@ import java.util.List;
 //화면단 까지 불러줌 로직 처리는 PostsApiController가..
 @RequiredArgsConstructor
 @Controller
+@Slf4j
 public class IndexController
 {
     private final PostsService postsService;
@@ -104,7 +106,7 @@ public class IndexController
 
         if (user != null)
         {
-            model.addAttribute("user", user.getNickname());
+            model.addAttribute("user", user);
 
             //게시글 작성자가 본인인지 확인
             if(dto.getUserId().equals(user.getId()))
@@ -113,6 +115,7 @@ public class IndexController
             }
 
         }
+
         //조회수 증가
         postsService.updateHit(id);
         model.addAttribute("posts", dto);
