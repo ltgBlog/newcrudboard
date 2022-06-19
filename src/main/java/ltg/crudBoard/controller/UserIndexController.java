@@ -50,7 +50,9 @@ public class UserIndexController
     @GetMapping("/auth/join")
     public String join()
     {
-        return "/user/user_join";
+        return "user/user_join";
+
+        //return "user/user_join";
     }
 
     @PostMapping("/auth/joinProc")
