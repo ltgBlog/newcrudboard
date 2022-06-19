@@ -68,7 +68,8 @@ public class UserIndexController
                 model.addAttribute(key, validatorResult.get(key));
             }
 
-            return "/user/user_join";
+            return "user/user_join";
+            //return "user/user_join";
 
         }
         userService.join(userDto);
@@ -82,7 +83,8 @@ public class UserIndexController
     {
         model.addAttribute("error", error);
         model.addAttribute("exception", exception);
-        return "/user/user_login";
+        return "user/user_login";
+        //return "user/user_login";
     }
 
 /*
