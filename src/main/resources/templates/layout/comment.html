@@ -14,8 +14,7 @@
                     <span th:if="|${comments.userId==user.id}|">
                         <button type="button" data-toggle="collapse" th:data-target="|#update-${comments.id}|"
                                 class="btn btn-primary">수정</button>
-                        <button type="button"
-                                th:onclick="|main.commentDelete(${posts.id},${comments.id}|"
+                        <button type="button" th:onclick="|main.commentDelete(${posts.id},${comments.id})|"
                                 class="btn btn-secondary">삭제</button>
                     </span>
                 </span>
