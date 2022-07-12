@@ -34,7 +34,7 @@ Java와 스프링 부트 기반으로 만들어본 게시판이다.
 
 ## Version Control
 * Git
-* GitHUb
+* GitHb
 
 
 # 3. 주요 기능들
