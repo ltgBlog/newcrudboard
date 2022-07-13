@@ -51,10 +51,17 @@ Java와 스프링 부트 기반으로 만들어본 게시판이다.
 ![구성도](아키텍처.png)
 # 5. ERD
 ![ERD](ERD.png)
-# 데모 영상 / 사진
+# 6. 데모 영상 / 사진
+
+## 회원가입 / 로그인 / 글 등록하기
 ![회원가입_로그인_글 등록](https://user-images.githubusercontent.com/51878026/178646407-6a2fd86e-0b7c-44ac-863b-26281cb68835.gif)
 
+## 글 수정 / 삭제하기
 ![글 수정_삭제](https://user-images.githubusercontent.com/51878026/178646520-84c002ec-884a-4619-99f4-253cbfd03322.gif)
 
+## OAuth로 로그인 하기
+![oauth로그인](https://user-images.githubusercontent.com/51878026/178646603-e688c867-c8d6-45ea-a7e2-c5fab554499c.gif)
 
+## 댓글 등록 / 수정 / 삭제하기
+![댓글 등록_수정_삭제](https://user-images.githubusercontent.com/51878026/178646632-bcf3a404-c49d-4479-afa1-cc9afbe915f9.gif)
 
