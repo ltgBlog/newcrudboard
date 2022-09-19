@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/header :: header"></head>
 <body>
-<h2>게시판</h2>
+<a href ="/" style="color:rgb(45,180,0); text-decoration:none"><h1>freeBoard!</h1></a>
 <div class="col-md-12">
     <!-- 로그인 기능 영역 -->
     <div class="row">
@@ -18,8 +18,15 @@
                         <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
                         <a href="/oauth2/authorization/naver" class="btn btn-secondary active" role="button">Naver Login</a>
                         <a href="/auth/join" class="btn btn-warning" role="button">회원가입</a>
+
             </span>
         </div>
+    </div>
+    <div class="d-flex justify-content-end">
+        <form th:action="@{/}" method="get">
+            <input type="text" name="searchKeyword"> <!--주소창에 파라미터로 넘겨준다-->
+            <button type="submit"> 검색</button>
+        </form>
     </div>
     <br>
     <!-- 목록 출력 영역 -->
@@ -65,10 +72,9 @@
             </ul>
         </nav>
     </div>
-    <form th:action="@{/}" method="get">
-        <input type="text" name="searchKeyword"> <!--주소창에 파라미터로 넘겨준다-->
-        <button type="submit"> 검색</button>
-    </form>
+
+
+
 
 
 </div>

@@ -44,7 +44,7 @@ public class IndexController
         }
         else
         {
-            list=postsService.search(searchKeyword, pageable);
+            list=postsService.search(searchKeyword,searchKeyword, pageable);
         }
 
         //UserSessionDto user = (UserSessionDto) httpSession.getAttribute("user");

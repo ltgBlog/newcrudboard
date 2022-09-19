@@ -21,5 +21,5 @@ public interface PostsRepository extends JpaRepository<Posts, Long>
     int updateHit(@Param("id") Long id);
 
     //검색,정렬. 제목으로 찾고, Containing이 있으므로 검색하는 단어가 포함된 모든 제목을 찾는다.
-    Page<Posts> findByTitleContaining(String searchKeyword, Pageable pageable);
+    Page<Posts> findByTitleContainingOrContentContaining(String searchKeyword, String content, Pageable pageable);
 }

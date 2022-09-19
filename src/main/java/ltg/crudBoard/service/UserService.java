@@ -12,7 +12,7 @@ import org.springframework.validation.FieldError;
 import java.util.HashMap;
 import java.util.Map;
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor //생성자 생략.
 @Service
 public class UserService
 {
