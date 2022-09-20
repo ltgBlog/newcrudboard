@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ltg.crudBoard.auth.LoginUser;
 import ltg.crudBoard.domain.Posts;
+import ltg.crudBoard.domain.Role;
 import ltg.crudBoard.dto.CommentResponseDto;
 import ltg.crudBoard.dto.PostsResponseDto;
 import ltg.crudBoard.dto.UserSessionDto;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+
 
 
 //화면단 까지 불러줌 로직 처리는 PostsApiController가..
@@ -48,8 +50,14 @@ public class IndexController
         }
 
         //UserSessionDto user = (UserSessionDto) httpSession.getAttribute("user");
-        if (user != null) { //로그인 되었다면 model에 저장
+        if (user != null)
+        { //로그인 되었다면 model에 저장
+
             model.addAttribute("user", user.getNickname());
+
+            if(user.getRole().equals(Role.ADMIN))
+                model.addAttribute("admin", true);
+
         }
 
         //현재 페이지 기준, 앞 뒤로 4칸씩 보여주기 위함
@@ -61,7 +69,14 @@ public class IndexController
         model.addAttribute("endPage", endPage);
         model.addAttribute("posts", list); //게시글 리스트
 
+
         return "index";
+    }
+
+    @GetMapping("/admin")
+    public String toAdmin()
+    {
+        return "/admin/adminPage";
     }
 
     //글 쓰기 페이지로!

@@ -2,6 +2,7 @@ package ltg.crudBoard.config;
 
 import lombok.RequiredArgsConstructor;
 import ltg.crudBoard.auth.CustomUserDetailsService;
+import ltg.crudBoard.domain.Role;
 import ltg.crudBoard.oauth.CustomOAuth2UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,7 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .authorizeRequests()//url별 권한 접근 제어 관리 옵션 시작
                 //.headers().frameOptions().disable()// h2콘솔 사용하기 위해  disable.
                 .antMatchers("/", "/auth/**", "/posts/read/**").permitAll() //권한 관리 대상 지정. permitall-모든 권한에게 공개
-                //.antMatchers("/api/v1/**").hasRole(Role.USER.name())
+                //.antMatchers("/api/v1/**").hasRole(Role.USER.name()) //hasRole은, 비로그인 시 로그인 페이지로 이동시킴
+                .antMatchers("/admin/**").hasRole(Role.ADMIN.name()) //관리자 권한
                 .anyRequest().authenticated() //나머지 요청들은 인증된 사람에게만 공개
                 .and()
                 .formLogin()
