@@ -17,7 +17,8 @@ public class PostsSaveRequestDto
     private String writer;
     private int hit;
     private User user;
-
+    private String filename;
+    private String filepath;
 
     //dto -> entity. db에 등록
     public Posts toEntity()
@@ -29,6 +30,8 @@ public class PostsSaveRequestDto
                 .writer(writer)
                 .hit(0)
                 .user(user)
+                .filename(filename)
+                .filepath(filepath)
                 .build();
     }
 

@@ -18,6 +18,8 @@ public class PostsResponseDto
     private int hit;
     private Long userId;
     private List<CommentResponseDto> comments;
+    private String filename;
+    private String filepath;
 
     //entity -> dto. db를 조회
     public PostsResponseDto(Posts entity) {
@@ -28,6 +30,8 @@ public class PostsResponseDto
         this.hit = entity.getHit();
         this.userId = entity.getUser().getId(); //왜래키를 통해서 Posts->User->id 필드 가져오기
         this.comments = entity.getComments().stream().map(comment -> new CommentResponseDto(comment)).collect(Collectors.toList());
+        this.filename = entity.getFilename();
+        this.filepath = entity.getFilepath();
 
     }
 }

@@ -55,7 +55,7 @@ public class UserIndexController
         //return "user/user_join";
     }
 
-    @PostMapping("/auth/joinProc")
+    @PostMapping("/auth/joinProc") //@ModelAttribute 생략됨.
     public String joinProc(@Valid UserSaveRequestDto userDto, BindingResult bindingResult, Model model)
     {
         if(bindingResult.hasErrors())

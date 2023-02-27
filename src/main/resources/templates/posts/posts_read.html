@@ -1,6 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/header :: header"></head>
+<head th:replace="layout/header :: header">
+    <meta charset="UTF-8">
+</head>
 <body>
 <h1>게시글 상세보기</h1>
 
@@ -29,6 +31,9 @@
         <a href="/" role="button" class="btn btn-primary">목록</a>
         <span th:if="${sameUser}">
                   <a th:href="@{'/posts/update/' + ${posts.id}}" role="button" class="btn btn-secondary">수정</a>
+        </span>
+        <span th:if="${posts.filepath}">
+            <a th:href="@{${posts.filepath}}">첨부파일 보기</a>
         </span>
         <div th:replace="layout/comment :: comment"></div>
     </div>

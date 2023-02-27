@@ -10,6 +10,9 @@ import ltg.crudBoard.dto.UserSessionDto;
 import ltg.crudBoard.service.PostsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -27,11 +30,10 @@ public class PostsApiController
     }
 
     //create
-    @PostMapping("/posts")
-    public Long save(@RequestBody PostsSaveRequestDto requestDto, @LoginUser UserSessionDto userSessionDto)
-    {
+    @PostMapping("/posts") //@RequestBody PostsSaveRequestDto requestDto 였는데 첨부파일 때문에 뺌
+    public Long save(PostsSaveRequestDto requestDto, @LoginUser UserSessionDto userSessionDto, MultipartFile file) throws IOException {
         //닉네임도 넘겨준다
-        return postsService.save(userSessionDto.getNickname(),requestDto);
+        return postsService.save(userSessionDto.getNickname(),requestDto, file);
     }
 
     //update

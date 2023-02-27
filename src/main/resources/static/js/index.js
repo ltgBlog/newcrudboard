@@ -31,33 +31,30 @@ var main = {
 
     },
     save : function () {
-        var data = {
-            title: $('#title').val(),
-            writer: $('#writer').val(),
-            content: $('#content').val()
-        };
-        // 공백 및 빈 문자열 체크
-            if (!data.title || data.title.trim() === "" || !data.content || data.content.trim() === "")
-            {
-                alert("공백 또는 입력하지 않은 부분이 있습니다.");
-                return false;
-            }
-            else
-            {
-                $.ajax({
-                    type: 'POST',
-                    url: '/api/posts',
-                    dataType: 'json',
-                    contentType:'application/json; charset=utf-8',
-                    data: JSON.stringify(data)
-                }).done(function() {
-                    alert('글이 등록되었습니다.');
-                    window.location.href = '/';
-                }).fail(function (error) {
-                    alert(JSON.stringify(error));
-                });
-            }
+        var formData = new FormData($('#post-form')[0]);
+        formData.append('title', $('#title').val());
+        formData.append('writer', $('#writer').val());
+        formData.append('content', $('#content').val());
+        formData.append('file', $('input[name=file]')[0].files[0]);
 
+        // 공백 및 빈 문자열 체크
+        if (!formData.get('title') || formData.get('title').trim() === "" || !formData.get('content') || formData.get('content').trim() === "") {
+            alert("공백 또는 입력하지 않은 부분이 있습니다.");
+            return false;
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: '/api/posts',
+                processData: false,
+                contentType: false,
+                data: formData
+            }).done(function() {
+                alert('글이 등록되었습니다.');
+                window.location.href = '/';
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        }
     },
     update : function () {
         var data = {

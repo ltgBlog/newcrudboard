@@ -13,8 +13,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -26,12 +30,19 @@ public class PostsService
     private final UserRepository userRepository;
 
     @Transactional
-    public Long save(String nickname, PostsSaveRequestDto requestDto)
-    {
+    public Long save(String nickname, PostsSaveRequestDto requestDto, MultipartFile file) throws IOException {
         User user = userRepository.findByNickname(nickname); //닉네임으로 유저를 찾고
         requestDto.setUser(user); //dto에 유저 저장 (Posts의 user_id(FK)에 저장하기 위해)
 
+        String projectpath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+        UUID uuid = UUID.randomUUID();
+        String filename = uuid + "_" + file.getOriginalFilename();
+        File saveFile = new File(projectpath, filename);
+        file.transferTo(saveFile);
+        requestDto.setFilename(filename);
+        requestDto.setFilepath("src/main/resources/static/files/" + filename);
         return postsRepository.save(requestDto.toEntity()).getId();
+
     }
 
     //단, update는 직접 구현해야 한다..
